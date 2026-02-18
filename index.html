@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structure Puzzle Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="screen active">
+        <div class="container">
+            <div class="login-card">
+                <h1><i class="fas fa-puzzle-piece"></i> Data Structure Puzzle Game</h1>
+                <div class="auth-form">
+                    <div class="form-toggle">
+                        <button id="loginTab" class="active">Login</button>
+                        <button id="registerTab">Register</button>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form-content active">
+                        <input type="text" id="loginUsername" placeholder="Username" required>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <button type="submit">Login</button>
+                    </form>
+                    
+                    <form id="registerForm" class="auth-form-content">
+                        <input type="text" id="registerUsername" placeholder="Username" required>
+                        <input type="email" id="registerEmail" placeholder="Email" required>
+                        <input type="password" id="registerPassword" placeholder="Password" required>
+                        <button type="submit">Register</button>
+                    </form>
+                    
+                    <div class="guest-login">
+                        <button id="guestLoginBtn" class="btn-guest">
+                            <i class="fas fa-user-secret"></i> Play as Guest
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Menu Screen -->
+    <div id="mainMenuScreen" class="screen">
+        <div class="container">
+            <div class="menu-card">
+                <h1><i class="fas fa-gamepad"></i> Main Menu</h1>
+                <div class="user-info">
+                    <span id="welcomeUser">Welcome, Player!</span>
+                    <button id="logoutBtn" class="btn-secondary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+                </div>
+                <div class="menu-options">
+                    <button id="startGameBtn" class="btn-primary"><i class="fas fa-play"></i> Start Game</button>
+                    <button id="viewProgressBtn" class="btn-secondary"><i class="fas fa-chart-line"></i> View Progress</button>
+                    <button id="instructionsBtn" class="btn-secondary"><i class="fas fa-book"></i> Instructions</button>
+                    <button id="exitBtn" class="btn-danger"><i class="fas fa-times"></i> Exit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Structure Selection Screen -->
+    <div id="dataStructureScreen" class="screen">
+        <div class="container">
+            <div class="selection-card">
+                <h1><i class="fas fa-sitemap"></i> Select Data Structure</h1>
+                <div class="data-structure-grid">
+                    <button class="ds-card" data-ds="stack">
+                        <i class="fas fa-layer-group"></i>
+                        <h3>Stack</h3>
+                        <p>LIFO operations: Push, Pop</p>
+                    </button>
+                    <button class="ds-card" data-ds="queue">
+                        <i class="fas fa-stream"></i>
+                        <h3>Queue</h3>
+                        <p>FIFO operations: Enqueue, Dequeue</p>
+                    </button>
+                    <button class="ds-card" data-ds="linkedlist">
+                        <i class="fas fa-link"></i>
+                        <h3>Linked List</h3>
+                        <p>Dynamic operations: Insert, Delete</p>
+                    </button>
+                    <button class="ds-card" data-ds="tree">
+                        <i class="fas fa-tree"></i>
+                        <h3>Tree</h3>
+                        <p>Hierarchical operations: Insert, Search</p>
+                    </button>
+                    <button class="ds-card" data-ds="graph">
+                        <i class="fas fa-project-diagram"></i>
+                        <h3>Graph</h3>
+                        <p>Network operations: Add, Traverse</p>
+                    </button>
+                </div>
+                <button id="backToMenuBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Level Selection Screen -->
+    <div id="levelScreen" class="screen">
+        <div class="container">
+            <div class="level-card">
+                <h1><i class="fas fa-trophy"></i> Select Level</h1>
+                <div id="currentDs" class="current-ds"></div>
+                <div class="level-grid" id="levelGrid">
+                    <!-- Levels will be dynamically generated -->
+                </div>
+                <button id="backToDsBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back to Data Structures</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="screen">
+        <div class="game-container">
+            <div class="game-header">
+                <div class="game-info">
+                    <span id="levelInfo">Level 1 - Stack</span>
+                    <span id="moveCounter">Moves: 0</span>
+                    <span id="timer">Time: 00:00</span>
+                </div>
+                <div class="game-controls">
+                    <button id="hintBtn" class="btn-secondary"><i class="fas fa-lightbulb"></i> Hint</button>
+                    <button id="resetBtn" class="btn-secondary"><i class="fas fa-redo"></i> Reset</button>
+                    <button id="backToLevelBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+            </div>
+            
+            <div class="game-content">
+                <div class="puzzle-area">
+                    <div class="target-section">
+                        <h3>Target State</h3>
+                        <div id="targetStructure" class="structure-display"></div>
+                    </div>
+                    
+                    <div class="current-section">
+                        <h3>Current State</h3>
+                        <div id="currentStructure" class="structure-display"></div>
+                    </div>
+                </div>
+                
+                <div class="operations-panel">
+                    <h3>Operations</h3>
+                    <div id="operationsButtons" class="operations-buttons">
+                        <!-- Operation buttons will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-footer">
+                <div id="messageArea" class="message-area"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Screen -->
+    <div id="progressScreen" class="screen">
+        <div class="container">
+            <div class="progress-card">
+                <h1><i class="fas fa-chart-line"></i> Your Progress</h1>
+                <div class="progress-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-trophy"></i>
+                        <span>Total Score: <span id="totalScore">0</span></span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Levels Completed: <span id="levelsCompleted">0</span></span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Total Time: <span id="totalTime">00:00</span></span>
+                    </div>
+                </div>
+                <div class="progress-details">
+                    <h3>Data Structure Progress</h3>
+                    <div id="dsProgress" class="ds-progress">
+                        <!-- Progress details will be dynamically generated -->
+                    </div>
+                </div>
+                <button id="backToMenuFromProgressBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instructions Screen -->
+    <div id="instructionsScreen" class="screen">
+        <div class="container">
+            <div class="instructions-card">
+                <h1><i class="fas fa-book"></i> How to Play</h1>
+                <div class="instructions-content">
+                    <div class="instruction-section">
+                        <h3><i class="fas fa-gamepad"></i> Objective</h3>
+                        <p>Transform the initial data structure state to match the target state using the allowed operations.</p>
+                    </div>
+                    
+                    <div class="instruction-section">
+                        <h3><i class="fas fa-mouse-pointer"></i> Controls</h3>
+                        <ul>
+                            <li>Select a data structure from the main menu</li>
+                            <li>Choose a level based on difficulty</li>
+                            <li>Use operation buttons to modify the data structure</li>
+                            <li>Complete the puzzle in minimum moves</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="instruction-section">
+                        <h3><i class="fas fa-star"></i> Scoring</h3>
+                        <ul>
+                            <li>Correct moves: +10 points</li>
+                            <li>Level completion: +50 points</li>
+                            <li>Time bonus: Up to +30 points</li>
+                            <li>Hint usage: -5 points</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="instruction-section">
+                        <h3><i class="fas fa-layer-group"></i> Data Structures</h3>
+                        <ul>
+                            <li><strong>Stack:</strong> LIFO (Last In, First Out)</li>
+                            <li><strong>Queue:</strong> FIFO (First In, First Out)</li>
+                            <li><strong>Linked List:</strong> Dynamic insertion/deletion</li>
+                            <li><strong>Tree:</strong> Hierarchical organization</li>
+                            <li><strong>Graph:</strong> Network of connected nodes</li>
+                        </ul>
+                    </div>
+                </div>
+                <button id="backToMenuFromInstructionsBtn" class="btn-secondary"><i class="fas fa-arrow-left"></i> Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <h2><i class="fas fa-check-circle"></i> Level Complete!</h2>
+            <div class="success-stats">
+                <p>Moves: <span id="finalMoves">0</span></p>
+                <p>Time: <span id="finalTime">00:00</span></p>
+                <p>Score: <span id="finalScore">0</span></p>
+            </div>
+            <div class="success-actions">
+                <button id="nextLevelBtn" class="btn-primary">Next Level</button>
+                <button id="replayLevelBtn" class="btn-secondary">Replay Level</button>
+                <button id="backToMenuFromSuccessBtn" class="btn-secondary">Back to Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
