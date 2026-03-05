@@ -8,6 +8,7 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+init_db()
 
 # Database initialization
 def init_db():
