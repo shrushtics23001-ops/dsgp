@@ -8,6 +8,19 @@ import os
 
 app = Flask(__name__)
 CORS(app)
+def init_db():
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT
+        )
+    """)
+    conn.commit()
+    conn.close()
+
+# CALL FUNCTION
 init_db()
 
 # Database initialization
